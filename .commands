@@ -1,0 +1,2 @@
+# force one worker
+npx playwright test --workers=1
