@@ -1,10 +1,28 @@
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig, devices, expect } from '@playwright/test';
 
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
  */
 // require('dotenv').config();
+
+
+expect.extend({
+  toBeWithinRange(received: number, floor: number, ceiling: number) {
+    const pass = received >= floor && received <= ceiling;
+    if (pass) {
+      return {
+        message: () => 'passed',
+        pass: true,
+      };
+    } else {
+      return {
+        message: () => 'failed',
+        pass: false,
+      };
+    }
+  },
+});
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -21,6 +39,40 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
+  
+  // // Glob patterns or regular expressions to ignore test files. 
+  // testIgnore: '*test-assets',
+
+  // // Glob patterns or regular expressions that match test files. 
+  // testMatch: '*todo-tests/*.spec.ts',
+
+  // // Folder for test artifacts such as screenshots, videos, traces, etc.
+  // outputDir: 'test-results',
+
+  // // path to the global setup files.
+  // globalSetup: require.resolve('./global-setup'),
+
+  // // path to the global teardown files.
+  // globalTeardown: require.resolve('./global-teardown'),
+
+  // // Each test is given 30 seconds.
+  // timeout: 30000,
+  // expect: {
+  //   // Maximum time expect() should wait for the condition to be met.
+  //   timeout: 5000,
+
+  //   toHaveScreenshot: {
+  //     // An acceptable amount of pixels that could be different, unset by default.
+  //     maxDiffPixels: 10,
+  //   },
+
+  //   toMatchSnapshot:  {
+  //     // An acceptable ratio of pixels that are different to the total amount of pixels, between 0 and 1.
+  //     maxDiffPixelRatio: 10,
+  //   },
+  // },
+
+
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
