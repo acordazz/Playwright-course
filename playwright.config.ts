@@ -85,8 +85,14 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
+      name: 'setup',
+      testMatch: '**/*.setup.ts',
+    },
+    {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: { ...devices['Desktop Chrome'],
+      storageState: 'playwright/.auth/user.json', },
+      dependencies: ['setup'],
     },
 
     {
@@ -94,9 +100,11 @@ export default defineConfig({
       use: { ...devices['Desktop Firefox'] },
     },
 
+    // watch for the dependency here
     {
       name: 'webkit',
       use: { ...devices['Desktop Safari'] },
+      dependencies: ['setup'],
     },
 
     /* Test against mobile viewports. */
@@ -118,6 +126,35 @@ export default defineConfig({
     //   name: 'Google Chrome',
     //   use: { ..devices['Desktop Chrome'], channel: 'chrome' },
     // },
+
+
+  /* have different environments, each on a project */
+    {
+      name: 'staging',
+      use: {
+        baseURL: 'staging.example.com',
+      },
+      retries: 2,
+    },
+    {
+      name: 'production',
+      use: {
+        baseURL: 'production.example.com',
+      },
+      retries: 0,
+    },
+
+    /* splitting tests into projects: filter by matching or ignoring file names */
+    {
+      name: 'Smoke',
+      testMatch: /.*smoke.spec.ts/,
+      retries: 0,
+    },
+    {
+      name: 'Default',
+      testIgnore: /.*smoke.spec.ts/,
+      retries: 2,
+    },
   ],
 
   /* Run your local dev server before starting the tests */
@@ -126,4 +163,5 @@ export default defineConfig({
   //   url: 'http://127.0.0.1:3000',
   //   reuseExistingServer: !process.env.CI,
   // },
+
 });
