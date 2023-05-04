@@ -90,13 +90,13 @@ export default defineConfig({
   projects: [
     {
       name: "setup",
-      testMatch: "auth.setup.ts", // uncomment this project if you want to use the authentication setup
+      testMatch: useAuthConfig ? "auth.setup.ts" : "", // uncomment this project if you want to use the authentication setup
     },
     {
       name: "chromium",
       use: {
         ...devices["Desktop Chrome"],
-        storageState: "playwright/.auth/user.json",
+        storageState: useAuthConfig ? "playwright/.auth/user.json" : null,
       },
       dependencies: useAuthConfig ? ["setup"] : [], // uncomment this row if you want to use the authentication setup at this project
     },

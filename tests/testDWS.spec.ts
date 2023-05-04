@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { useAuthConfig } from "../playwright.config";
+import { useAuthConfig } from '../playwright.config';
 import { Login } from "../POMs/DWSLogin";
 import { TopMenu } from "../POMs/DWSTopMenu";
 import { ItemsMenu } from "../POMs/DWSItemsMenu";
@@ -8,7 +8,6 @@ import { Cart } from "../POMs/DWSCart";
 
 const email = "acordazz@example1.test";
 const password = "Tosca123!";
-// const useAuthConfig = false; //toggle to use auth.setup.ts as authentication procedure
 
 test.beforeEach(async ({ page }) => {
   if (!useAuthConfig) {
