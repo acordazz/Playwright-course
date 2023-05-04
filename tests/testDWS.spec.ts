@@ -1,5 +1,3 @@
-import * as fs from "fs";
-const path = require("path");
 import { test, expect } from "@playwright/test";
 import { Login } from "../POMs/DWSLogin";
 import { TopMenu } from "../POMs/DWSTopMenu";
