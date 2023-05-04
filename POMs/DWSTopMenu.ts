@@ -16,14 +16,22 @@ export class TopMenu {
         this.Register = page.getByRole('link', { name: 'Register' })
         this.LogIn = this.page.getByRole('link', { name: 'Log in' })
         this.LogOut = this.page.getByRole('link', { name: 'Log out' })
-        this.ShoppingCart = page.getByRole('link', { name: 'Shopping cart' })
+        this.ShoppingCart = page.locator('#topcartlink')
         this.WishList = page.getByRole('link', { name: 'Wishlist (0)' })
         this.MyAccountInfo = page.getByRole('link', { name: email })
     }
 
     async gotoLogin() {
         // FILL UP
-        this.LogIn.click();
+        await this.LogIn.click();
+    }
+
+    async logOut() {
+        await this.LogOut.click();
+    }
+
+    async goToCart() {        
+        await this.ShoppingCart.click();
     }
 
 

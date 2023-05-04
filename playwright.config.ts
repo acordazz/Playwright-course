@@ -6,6 +6,8 @@ import { defineConfig, devices, expect } from "@playwright/test";
  */
 // require('dotenv').config();
 
+
+// this is an example of a custom expect
 expect.extend({
   toBeWithinRange(received: number, floor: number, ceiling: number) {
     const pass = received >= floor && received <= ceiling;
@@ -83,17 +85,17 @@ export default defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
-    {
-      name: "setup",
-      testMatch: "auth.setup.ts",
-    },
+    // {
+    //   name: "setup",
+    //   testMatch: "auth.setup.ts", // uncomment this project if you want to use the authentication setup
+    // },
     {
       name: "chromium",
       use: {
         ...devices["Desktop Chrome"],
         storageState: "playwright/.auth/user.json",
       },
-      dependencies: ["setup"],
+      // dependencies: ["setup"], // uncomment this row if you want to use the authentication setup at this project
     },
 
     {
