@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { useAuthConfig } from "../playwright.config";
 import { Login } from "../POMs/DWSLogin";
 import { TopMenu } from "../POMs/DWSTopMenu";
 import { ItemsMenu } from "../POMs/DWSItemsMenu";
@@ -7,10 +8,10 @@ import { Cart } from "../POMs/DWSCart";
 
 const email = "acordazz@example1.test";
 const password = "Tosca123!";
-const useAuthConfig = true; //toggle to use auth.setup.ts as authentication procedure
+// const useAuthConfig = false; //toggle to use auth.setup.ts as authentication procedure
 
-if (!useAuthConfig) {
-  test.beforeEach(async ({ page }) => {
+test.beforeEach(async ({ page }) => {
+  if (!useAuthConfig) {
     await page.goto("https://demowebshop.tricentis.com/");
     const topMenu = new TopMenu(page);
     const loginPage = new Login(page);
@@ -20,11 +21,12 @@ if (!useAuthConfig) {
       .soft(loginPage.recurringCustomer)
       .toBeVisible({ timeout: 3000 });
     await loginPage.doLogin(email, password);
-  });
-}
+  }
+});
 
 test("Buy jeans", async ({ page }) => {
-  if (useAuthConfig) { // you need to enter the address in the browser only if you haven't called test.beforeEach()
+  if (useAuthConfig) {
+    // you need to enter the address in the browser only if you haven't called test.beforeEach()
     await page.goto("https://demowebshop.tricentis.com/");
   }
   const itemsMenu = new ItemsMenu(page);

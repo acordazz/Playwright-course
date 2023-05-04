@@ -1,5 +1,8 @@
 import { defineConfig, devices, expect } from "@playwright/test";
 
+
+export const useAuthConfig = true; //toggle to use auth.setup.ts as authentication procedure
+
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -85,17 +88,17 @@ export default defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
-    // {
-    //   name: "setup",
-    //   testMatch: "auth.setup.ts", // uncomment this project if you want to use the authentication setup
-    // },
+    {
+      name: "setup",
+      testMatch: "auth.setup.ts", // uncomment this project if you want to use the authentication setup
+    },
     {
       name: "chromium",
       use: {
         ...devices["Desktop Chrome"],
         storageState: "playwright/.auth/user.json",
       },
-      // dependencies: ["setup"], // uncomment this row if you want to use the authentication setup at this project
+      dependencies: useAuthConfig ? ["setup"] : [], // uncomment this row if you want to use the authentication setup at this project
     },
 
     {
